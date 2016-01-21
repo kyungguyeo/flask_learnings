@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Python Flask Bucket List App</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+		<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+		<link href="../static/css/bs_callout.css" rel="stylesheet">
+		<link href="../static/css/signup.css" rel="stylesheet">
+		<script src="../static/js/jquery-1.11.2.js"></script>
+		<script src="../static/js/nav_active.js"></script>
+		<script src="../static/js/addbucketlist.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	</head>
+
+	<body>
+		<header class="container">
+			<nav>
+				<ul class="nav nav-pills pull-xs-right">
+					<li class="nav-item">
+						<a class="btn btn-danger" href="/showSignOut" role="button">Sign Out</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<div class="container">
+			<div class="jumbotron">
+			  <div class="form-group">
+			    <p>What will you cross off your bucket list today?</p>
+			    <input type="text" class="form-control" placeholder="Add to your bucketlist">
+			  </div>
+			  <button id="AddBucketList" class="btn btn-lg btn-success" type="submit">Add</button>
+			</div>
+		</div>
+
+		<div class="container">
+			<div id="addlisthere"> </div>
+		</div>
+	    
+	    <div class="container">
+	      <footer class="footer">
+	          <p>&copy; Company 2015</p>
+	      </footer>
+	    </div> 
+		</div> 
+	</body>
+</html>

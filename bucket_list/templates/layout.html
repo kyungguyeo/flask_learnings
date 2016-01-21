@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Python Flask Bucket List App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <script src="../static/js/jquery-1.11.2.js"></script>
+    <script src="../static/js/nav_active.js"></script>
+    <link href="../static/css/bs_callout.css" rel="stylesheet">
+    <link href="../static/css/signup.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="container">
+      <nav>
+        <ul class="nav nav-pills pull-xs-right">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/showSignIn">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/showSignUp">Sign Up</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    
+    <div class="container"> 
+      {% block body %}{% endblock %}
+    </div>
+    
+    <div class="container">
+      <footer class="footer">
+          <p>&copy; Company 2015</p>
+      </footer>
+    </div>  
+  </body>
+</html>
+
