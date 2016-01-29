@@ -9,10 +9,10 @@ This was my first app that I ever built on flask, and still needs many iteration
 Here are some screenshots:
 
 ###Home Page
-![Home Page](/images/Main.png)
+![Home Page](/images/Main.png?raw=true)
 
 ###Login Page
-![Login Page](/images/Login.png)
+![Login Page](/images/Login.png?raw=true)
 
 ###Profile Page
-![Profile Page](/images/Profile.png)
+![Profile Page](/images/Profile.png?raw=true)
