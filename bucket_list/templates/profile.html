@@ -10,10 +10,11 @@
 		<script src="../static/js/nav_active.js"></script>
 		<script src="../static/js/addbucketlist.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<link rel="icon" type="images/png" href="/static/images/favicon.png">
 	</head>
 
 	<body>
-		<header class="container">
+		<div class="container" style="padding: 8px 0;">
 			<nav>
 				<ul class="nav nav-pills pull-xs-right">
 					<li class="nav-item">
@@ -21,15 +22,16 @@
 					</li>
 				</ul>
 			</nav>
-		</header>
+		</div>
 
 		<div class="container">
 			<div class="jumbotron">
-			  <div class="form-group">
+			  <h3>Hello!</h3>
+			  <form class="form-group" method="post">
 			    <p>What will you cross off your bucket list today?</p>
-			    <input type="text" class="form-control" placeholder="Add to your bucketlist">
-			  </div>
-			  <button id="AddBucketList" class="btn btn-lg btn-success" type="submit">Add</button>
+			    <input id="task_desc" type="text" class="form-control" placeholder="New bucketlist task..." style="width: 200px; display: inline; height: 50px;">
+			    <input id="AddBucketList" class="btn btn-lg btn-success" type="submit" value="Add">
+			  </form>
 			</div>
 		</div>
 
@@ -39,7 +41,8 @@
 	    
 	    <div class="container">
 	      <footer class="footer">
-	          <p>&copy; Company 2015</p>
+          	  <a href="https://github.com/kyungguyeo/flask_learnings/tree/master/bucket_list" target='_blank'><img src='/static/images/github.png' style="width:32px;height:32px;display:block;margin:0 auto"></a>
+          	  <p style='text-align: center;'>&copy;2016</p>
 	      </footer>
 	    </div> 
 		</div> 

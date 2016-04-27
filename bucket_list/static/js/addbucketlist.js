@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('.jumbotron .form-group p').prepend($('<h3>/',{'text': "Hello " + window.location.search.split("=")[1] + "!"})) //Add a greeting
+	// $('.jumbotron .form-group p').prepend($('<h3>/',{'text': "Hello " + window.location.search.split("=")[1] + "!"})) //Add a greeting
 	$('#AddBucketList').click(function() {
 		$('#addlisthere')
 			.append($('<div/>',{'class':'card card-inverse card-primary text-xs-center col-lg-6'})
@@ -17,6 +17,17 @@ $(document).ready(function() {
 				)
 			)
 		$('input').val('');
+		$.ajax({
+			url: '/showProfile',
+			data: $('form').serialize(),
+			type: 'POST',
+			success: function(response){
+				console.log(response);
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
 	});
 })
 
