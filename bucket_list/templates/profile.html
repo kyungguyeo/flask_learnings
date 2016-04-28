@@ -9,6 +9,7 @@
 		<script src="../static/js/jquery-1.11.2.js"></script>
 		<script src="../static/js/nav_active.js"></script>
 		<script src="../static/js/addbucketlist.js"></script>
+		<script src="../static/js/removebucketlist.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<link rel="icon" type="images/png" href="/static/images/favicon.png">
 	</head>
@@ -26,17 +27,29 @@
 
 		<div class="container">
 			<div class="jumbotron">
-			  <h3>Hello!</h3>
-			  <form class="form-group" method="post">
+			  <h3>Hello {{name}}!</h3>
+			  <form class="form-group" id="task-form" method="POST">
 			    <p>What will you cross off your bucket list today?</p>
-			    <input id="task_desc" type="text" class="form-control" placeholder="New bucketlist task..." style="width: 200px; display: inline; height: 50px;">
+			    <input id="task_desc" name="inputTask" type="text" class="form-control" placeholder="New bucketlist task..." style="width: 200px; display: inline; height: 50px;">
 			    <input id="AddBucketList" class="btn btn-lg btn-success" type="submit" value="Add">
 			  </form>
 			</div>
 		</div>
 
 		<div class="container">
-			<div id="addlisthere"> </div>
+			{% for task in tasks %}
+			<div class="card card-inverse card-primary text-xs-center col-lg-6">
+				<div class="card-block">
+					<h4 class="card-title">{{ task.task_description }}</h4>
+					<p class="task-id" style="visibility: hidden;">{{ task.task_id }}</p>
+					<div class="btn-group" role="group">
+						<button id='taskcomplete' class="btn btn-success" type="button">It's Done!</button>
+						<button id='taskremove' class="btn btn-danger" type="button">Remove</button>
+					</div>
+				<footer class="text-muted">{{ task.date_created }}</footer>
+				</div>
+			</div>
+			{% endfor %}
 		</div>
 	    
 	    <div class="container">

@@ -44,13 +44,13 @@ def signUp():
             session.add(new_user)
             session.commit()
             flask_session['username'] = _username
-            return redirect('showProfile?firstname=' + _firstname)
+            return redirect('showProfile/' + _username)
     return render_template('signup.html', error=error)      
 
 @app.route('/showSignIn', methods=['POST','GET'])
 def signIn():
     error = None
-    if request.method == 'POST':                    
+    if request.method == 'POST': 
         _username = request.form['inputUsername']
         _password = request.form['inputPassword']
         user = session.query(Users).filter(Users.username == _username).one()
@@ -61,35 +61,42 @@ def signIn():
                 error = 'Invalid username or password'
             else:
                 flask_session['user_id'] = _user_id
-                return redirect('showProfile')
+                return redirect('showProfile/' + _username)
     return render_template('signin.html', error = error)
 
 @app.route('/showSignOut')
 def signOut():
-    if 'username' not in flask_session:
+    if 'user_id' not in flask_session:
         return redirect(url_for('signIn'))
     else:
         flask_session.pop('user_id', None)
         return redirect(url_for('main'))
 
-@app.route('/showProfile', methods=['POST','GET'])
-def Profile():
-    if 'username' not in flask_session:
+@app.route('/showProfile/<username>', methods=['POST','GET'])
+def Profile(username):
+    error=None
+    if 'user_id' not in flask_session:
         return redirect(url_for('main'))
     else:
         if request.method=='POST':
-            this_user = session.query(Users).filter(Users.id == flask_session['user_id'])
-            _task_decr = request.form['task_desc']
+            this_user = session.query(Users).filter(Users.id == flask_session['user_id']).one()
+            import pdb; pdb.set_trace()
+            _task_desc = request.form['inputTask']
             _user_id = this_user.id
-            _datecreated = datetime.now().time()
-            new_task = Tasks(user_id=_user_id, task_description=_task_decr, date_created=_datecreated, completed = False, user=this_user)
+            _datecreated = datetime.utcnow()
+            _first_name = this_user.first_name
+            new_task = Tasks(user_id=_user_id, task_description=_task_desc, date_created=_datecreated, completed=False, user=this_user)
             session.add(new_task)
             session.commit()
+            all_tasks = session.query(Tasks).filter(Tasks.user_id == flask_session['user_id']).all()
+            return render_template('profile.html', name=_first_name, tasks=all_tasks, error=error)
         elif request.method=='GET':
-            all_tasks = session.query(Tasks).filter(Tasks.user_id == flask_session['user_id'])
-
-
-        return render_template('profile.html')
+            if session.query(Tasks).filter(Tasks.user_id == flask_session['user_id']).all():
+                all_tasks = session.query(Tasks).filter(Tasks.user_id == flask_session['user_id']).all()
+            else:
+                all_tasks = []
+            _first_name = session.query(Users).filter(Users.id == flask_session['user_id']).one().first_name
+            return render_template('profile.html', name=_first_name, tasks=all_tasks, error=error)
 
 if __name__ == "__main__":
     app.run(port=5002)
