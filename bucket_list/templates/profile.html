@@ -28,7 +28,7 @@
 		<div class="container">
 			<div class="jumbotron">
 			  <h3>Hello {{name}}!</h3>
-			  <form class="form-group" id="task-form" method="POST">
+			  <form class="form-group" id="task-form" method="post">
 			    <p>What will you cross off your bucket list today?</p>
 			    <input id="task_desc" name="inputTask" type="text" class="form-control" placeholder="New bucketlist task..." style="width: 200px; display: inline; height: 50px;">
 			    <input id="AddBucketList" class="btn btn-lg btn-success" type="submit" value="Add">
@@ -41,12 +41,21 @@
 			<div class="card card-inverse card-primary text-xs-center col-lg-6">
 				<div class="card-block">
 					<h4 class="card-title">{{ task.task_description }}</h4>
-					<p class="task-id" style="visibility: hidden;">{{ task.task_id }}</p>
-					<div class="btn-group" role="group">
-						<button id='taskcomplete' class="btn btn-success" type="button">It's Done!</button>
-						<button id='taskremove' class="btn btn-danger" type="button">Remove</button>
+					<div class="btn-group" role="group">	
+						<form action="/completeTask" method="post">
+							<input id='taskcomplete' class="btn btn-success" type="submit" value="It's Done!"></input>
+							<select name="task-id" style="visibility: hidden; height: 0px; width: 0px;">
+								<option value={{ task.id }}>{{ task.id }}</option>
+							</select>
+						</form>
+						<form action="/deleteTask" method="post">
+							<input id='taskremove' class="btn btn-danger" type="submit" value="Remove"></input>
+							<select name="task-id" style="visibility: hidden; height: 0px; width: 0px;">
+								<option value={{ task.id }}>{{ task.id }}</option>
+							</select>
+						</form>
 					</div>
-				<footer class="text-muted">{{ task.date_created }}</footer>
+					<footer class="text-muted">{{ task.date_created }}</footer>
 				</div>
 			</div>
 			{% endfor %}

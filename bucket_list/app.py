@@ -1,7 +1,7 @@
 from flask import Flask, render_template, json, request, redirect, url_for, flash, session as flask_session
 from werkzeug import generate_password_hash, check_password_hash
 from datetime import datetime
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, and_
 from sqlalchemy.orm import sessionmaker
 from models import Users, Base, Tasks
 
@@ -67,10 +67,10 @@ def signIn():
 @app.route('/showSignOut')
 def signOut():
     if 'user_id' not in flask_session:
-        return redirect(url_for('signIn'))
+        return redirect('showSignIn')
     else:
         flask_session.pop('user_id', None)
-        return redirect(url_for('main'))
+        return redirect('/')
 
 @app.route('/showProfile/<username>', methods=['POST','GET'])
 def Profile(username):
@@ -80,7 +80,6 @@ def Profile(username):
     else:
         if request.method=='POST':
             this_user = session.query(Users).filter(Users.id == flask_session['user_id']).one()
-            import pdb; pdb.set_trace()
             _task_desc = request.form['inputTask']
             _user_id = this_user.id
             _datecreated = datetime.utcnow()
@@ -88,15 +87,35 @@ def Profile(username):
             new_task = Tasks(user_id=_user_id, task_description=_task_desc, date_created=_datecreated, completed=False, user=this_user)
             session.add(new_task)
             session.commit()
-            all_tasks = session.query(Tasks).filter(Tasks.user_id == flask_session['user_id']).all()
+            all_tasks = session.query(Tasks).filter(Tasks.user_id == flask_session['user_id'], Tasks.completed == False).all()
             return render_template('profile.html', name=_first_name, tasks=all_tasks, error=error)
         elif request.method=='GET':
             if session.query(Tasks).filter(Tasks.user_id == flask_session['user_id']).all():
-                all_tasks = session.query(Tasks).filter(Tasks.user_id == flask_session['user_id']).all()
+                all_tasks = session.query(Tasks).filter(Tasks.user_id == flask_session['user_id'], Tasks.completed == False).all()
             else:
                 all_tasks = []
             _first_name = session.query(Users).filter(Users.id == flask_session['user_id']).one().first_name
             return render_template('profile.html', name=_first_name, tasks=all_tasks, error=error)
+
+@app.route('/deleteTask', methods=['POST','GET'])
+def Delete():
+    error = None
+    if request.method=='POST':
+        _task_id = request.form.get('task-id')
+        _username = session.query(Users).filter(Users.id == flask_session['user_id']).one().username
+        session.query(Tasks).filter(Tasks.id == _task_id).delete()
+        session.commit()
+        return redirect('showProfile/' + _username)
+
+@app.route('/completeTask', methods=['POST','GET'])
+def Complete():
+    error = None
+    if request.method=='POST':
+        _task_id = request.form.get('task-id')
+        _username = session.query(Users).filter(Users.id == flask_session['user_id']).one().username
+        session.query(Tasks).filter(Tasks.id == _task_id).update({"completed": True})
+        session.commit()
+        return redirect('showProfile/' + _username)
 
 if __name__ == "__main__":
     app.run(port=5002)

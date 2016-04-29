@@ -11,21 +11,38 @@
   </head>
 
 <!-- {% block body%} -->
-      <div class="jumbotron">
-        <h1>Bucket List App</h1>
-      <form class="form-signin" method="post">
-        <label for="inputUsername" class="sr-only">Username</label>
-        <input type="username" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">
-        {% if error %}
-        <div class="bs-callout bs-callout-danger error">
-          <h4>Error</h4>
-          <p>{{ error }}</p>
-        </div>
-        {% endif %}
-      </form>
+      <div class="container">
+        <ul class="list-group">
+          <li class="list-group-item">
+            Cras justo odio
+            <span class="label label-default label-pill pull-xs-right">14</span>
+            <span class="label label-default label-pill pull-xs-right">14</span>
+            <span>
+              <form action="/completeTask" method="post">
+                <input id='taskcomplete' class="btn btn-success" type="submit" value="It's Done!"></input>
+                <select name="task-id" style="<visibility: hidden; height: 0px; width: 0px;">
+                  <option value={{ task.id }}>{{ task.id }}</option>
+                </select>
+              </form>
+              <form action="/deleteTask" method="post">
+                <input id='taskremove' class="btn btn-danger" type="submit" value="Remove"></input>
+                <select name="task-id" style="<visibility: hidden; height: 0px; width: 0px;">
+                  <option value={{ task.id }}>{{ task.id }}</option>
+                </select>
+              </form>
+            </span>
+          </li>
+          <li class="list-group-item">
+            <span class="label label-default label-pill pull-xs-right">2</span>
+            <span class="label label-default label-pill pull-xs-right">2</span>
+            Dapibus ac facilisis in
+          </li>
+          <li class="list-group-item">
+            <span class="label label-default label-pill pull-xs-right">1</span>
+            <span class="label label-default label-pill pull-xs-right">2</span>
+            Morbi leo risus
+          </li>
+        </ul>
       </div>
 <!-- {% endblock %}     -->
 
